@@ -2,7 +2,7 @@ let recognition;
 let isRecording = false;
 
 document.addEventListener("DOMContentLoaded", function () {
-    getCurrentLocation();
+
 
     var alertMessage = document.getElementById("toastMessage") ? document.getElementById("toastMessage").innerText : null;
 
@@ -18,11 +18,15 @@ function getCurrentLocation() {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
+                const latitude = position.coords.latitude.toFixed(7);
+                const longitude = position.coords.longitude.toFixed(7);
 
                 document.getElementById("latitude").value = latitude;
                 document.getElementById("longitude").value = longitude;
+
+                 latitudeInput.dispatchEvent(new Event('input'));
+                 longitudeInput.dispatchEvent(new Event('input'));
+
             },
             (error) => {
                 alert("위치를 가져오는 데 실패했습니다. 위치 권한을 확인하세요."); // 에러 처리
@@ -51,30 +55,36 @@ function toggleRecognition() {
 
 // 녹음 시작
 function startRecognition() {
-    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = "ko-KR";
-    console.log("시작");
-    recognition.continuous = true;
-    recognition.interimResults = true;
+    if (!recognition) {
+        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = "ko-KR";
+        recognition.continuous = true;
+        recognition.interimResults = true;
 
-    recognition.addEventListener("speechstart", () => {
-        console.log("음성을 듣고 있습니다.");
-    });
+        // 음성 인식이 시작될 때 호출
+        recognition.addEventListener("speechstart", () => {
+            console.log("음성을 듣고 있습니다.");
+        });
 
-    recognition.addEventListener("result", (e) => {
-        const transcript = e.results[0][0].transcript;
-        document.getElementById("request").value = transcript;
-        console.log("음성 결과: ", transcript);
-    });
+        recognition.addEventListener("result", (e) => {
+            const transcript = e.results[0][0].transcript;
+            document.getElementById("detail").value = transcript;
+            console.log("음성 결과: ", transcript);
+        });
 
-    recognition.addEventListener("error", (e) => {
-        console.error("음성 인식 오류: ", e);
-        alert("음성 인식에 오류가 발생했습니다.");
-    });
+        recognition.addEventListener("error", (e) => {
+            console.error("음성 인식 오류: ", e);
+            alert("음성 인식에 오류가 발생했습니다.");
+        });
 
-    recognition.addEventListener("end", () => {
-        console.log("음성 인식 종료");
-    });
+        recognition.addEventListener("end", () => {
+            if (isRecording) {
+                console.log("음성 인식이 종료되었습니다. 다시 시작합니다.");
+                recognition.start();
+            }
+        });
+    }
 
+    // 음성 인식 시작
     recognition.start();
 }
