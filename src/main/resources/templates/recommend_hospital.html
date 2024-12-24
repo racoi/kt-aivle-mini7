@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>추천 병원 정보</title>
+    <link rel="stylesheet" href="/css/recommend_hospital.css" type="text/css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- Include the header -->
+<div th:replace="~{layouts/header.html}"></div>
+
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-4 title-text">추천 병원 정보</h1>
+
+    <!-- 병원 리스트 -->
+    <div class="row row-cols-1 row-cols-md-2 g-4 cards-container">
+        <th:block th:each="hospital : ${hospitalList}">
+            <div class="col">
+                <div class="card h-100 shadow-sm border-primary">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0" th:text="${hospital.institution_name}"></h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>주소:</strong> <span th:text="${hospital.address}"></span></p>
+                        <p><strong>전화번호:</strong> <span th:text="${hospital.main_phone}"></span></p>
+                        <p><strong>응급실 전화:</strong> <span th:text="${hospital.emergency_phone}"></span></p>
+                        <p><strong>응급실 병상 수:</strong> <span th:text="${hospital.emergency_bed_count}">개</span></p>
+                        <p><strong>입원 가능 병상 수:</strong> <span th:text="${hospital.inpatient_bed_count}">개</span></p>
+                        <p><strong>장비 상태:</strong>
+                            <span th:if="${hospital.ct_availability}" class="badge bg-success">CT</span>
+                            <span th:if="${hospital.mri_availability}" class="badge bg-success">MRI</span>
+                            <span th:if="${hospital.ventilator_availability}" class="badge bg-success">인공호흡기</span>
+                            <span th:if="${hospital.ambulance_availability}" class="badge bg-success">구급차</span>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-1"><strong>거리:</strong> <span th:text="${hospital.distance}"></span></p>
+                        <p class="mb-1"><strong>소요 시간:</strong> <span th:text="${hospital.duration}"></span></p>
+                        <p class="mb-0"><strong>출발 시간:</strong> <span th:text="${hospital.departureTime}"></span></p>
+                        <p class="mb-0"><strong>도착 시간:</strong> <span th:text="${hospital.arrivalTime}"></span></p>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="~{layouts/footer.html}"></div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

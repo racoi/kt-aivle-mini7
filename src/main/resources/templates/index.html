@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>응급실 추천 시스템</title>
+    <link rel="stylesheet" href="/css/index.css" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="/js/index.js" defer></script>
+</head>
+<body>
+<!-- Include the header -->
+<div th:replace="~{layouts/header.html}"></div>
+
+<div class="toast-container position-absolute top-0 end-0 p-3 mt-5">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-danger text-white">
+            <!--                <img src="/img/em_icon2.png" class="rounded me-2" alt="..." style="width: 15px;">-->
+            <i class="bi bi-exclamation-circle me-2" style="font-size: 20px;"></i>
+            <strong class="me-auto ">System</strong>
+            <small>alert</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div id="toastMessage" class="toast-body" th:text="${alertMessage}">
+            <!-- 이곳에 alertMessage가 삽입됩니다 -->
+        </div>
+    </div>
+</div>
+
+<div class="form-container">
+    <form class="form" action="/recommend_hospital" method="get" enctype="application/x-www-form-urlencoded">
+        <p class="title">Request</p>
+        <p class="message">응급상황을 입력하고 가까운 병원을 찾으세요!</p>
+
+        <button class="record_button" type="button" onclick="toggleRecognition()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none" class="svg-icon"><g stroke-width="2" stroke-linecap="round" stroke="#ff342b"><rect y="3" x="9" width="6" rx="3" height="11"></rect><path d="m12 18v3"></path><path d="m8 21h8"></path><path d="m19 11c0 3.866-3.134 7-7 7-3.86599 0-7-3.134-7-7"></path></g></svg>
+            <span class="record_lable">녹음</span>
+        </button>
+
+        <label>
+            <input type="text" class="input" name="detail" id="detail"  required="">
+            <span>응급상황</span>
+        </label>
+
+        <label>
+            <input type="number" step="0.000001" class="input" name="latitude" required="">
+            <span>위도</span>
+        </label>
+        <label>
+            <input type="number" step="0.000001" class="input" name="longitude"  required="">
+            <span>경도</span>
+        </label>
+        <label>
+            <input type="number" class="input" name="emCount" required="">
+            <span>추천받을 응급실 수</span>
+        </label>
+        <button class="submit">Submit</button>
+    </form>
+</div>
+
+<!-- Footer -->
+<div th:replace="~{layouts/footer.html}"></div>
+</body>
+</html>
