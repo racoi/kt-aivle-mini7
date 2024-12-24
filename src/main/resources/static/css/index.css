@@ -113,6 +113,21 @@ body {
   background-color: rgb(56, 90, 194);
 }
 
+.location {
+  border: none;
+  outline: none;
+  background-color: #299129;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  transform: .3s ease;
+}
+
+.location:hover {
+  background-color: #197C03;
+}
+
 .form-container{
   padding-bottom: 50px;
 }
