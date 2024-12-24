@@ -32,7 +32,7 @@
         <p class="title">Request</p>
         <p class="message">응급상황을 입력하고 가까운 병원을 찾으세요!</p>
 
-        <button class="record_button" type="button" onclick="toggleRecognition()">
+        <button class="record_button" type="button" onclick="toggleRecognition(),startRecognition()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none" class="svg-icon"><g stroke-width="2" stroke-linecap="round" stroke="#ff342b"><rect y="3" x="9" width="6" rx="3" height="11"></rect><path d="m12 18v3"></path><path d="m8 21h8"></path><path d="m19 11c0 3.866-3.134 7-7 7-3.86599 0-7-3.134-7-7"></path></g></svg>
             <span class="record_lable">녹음</span>
         </button>
@@ -43,18 +43,21 @@
         </label>
 
         <label>
-            <input type="number" step="0.000001" class="input" name="latitude" required="">
+            <input type="number" step="0.000001" class="input" id="latitude" name="latitude" required="">
             <span>위도</span>
         </label>
         <label>
-            <input type="number" step="0.000001" class="input" name="longitude"  required="">
+            <input type="number" step="0.000001" class="input" id="longitude" name="longitude" required="">
             <span>경도</span>
         </label>
+
+
         <label>
             <input type="number" class="input" name="emCount" required="">
             <span>추천받을 응급실 수</span>
         </label>
         <button class="submit">Submit</button>
+        <button class="location" type="button" onclick="getCurrentLocation()">위치 자동 찾기</button>
     </form>
 </div>
 
