@@ -3,6 +3,7 @@ package com.aivle.mini7.service;
 import com.aivle.mini7.client.api.FastApiClient;
 import com.aivle.mini7.client.dto.HospitalResponse;
 import com.aivle.mini7.client.dto.StatusResponse;
+import com.aivle.mini7.mapper.RecommendHospitalMapper;
 import com.aivle.mini7.model.Advice;
 import com.aivle.mini7.model.EmergencyInfo;
 import com.aivle.mini7.model.Input;
@@ -31,6 +32,7 @@ public class EmergencyService {
     private final FastApiClient fastApiClient;
     private final EmergencyInfoRepository emergencyInfoRepository;
     private final AdviceRepository adviceRepository;
+    private final RecommendHospitalMapper recommendHospitalMapper;
 
     public StatusResponse createInput(Input input){
         LocalDateTime now=LocalDateTime.now();
@@ -40,9 +42,6 @@ public class EmergencyService {
         // 포맷 적용
         String formattedDateTime = now.format(formatter);
         input.setDatetime(formattedDateTime);
-//        input.setInputLatitude(37.555946);
-//        input.setInputLongitude(126.972317);
-//        FastApiClient 를 호출한다.
         StatusResponse statusResponse = fastApiClient.getHospital(input.getDetail(), input.getLatitude(), input.getLongitude(),input.getEmCount());
         saveInput(input);
         return statusResponse;
@@ -51,12 +50,8 @@ public class EmergencyService {
     public List<HospitalResponse> createHospitals(StatusResponse statusResponse,Input input){
         List<HospitalResponse> hospitalList = statusResponse.getData();
         for (HospitalResponse hr:hospitalList){
-            RecommendHospital recommendHospital = new RecommendHospital();
+            RecommendHospital recommendHospital = recommendHospitalMapper.hospitalResponseToRecommenHospital(hr);
             recommendHospital.setInputId(input);
-            recommendHospital.setDuration(hr.getDuration());
-            recommendHospital.setDistance(hr.getDistance());
-            recommendHospital.setArrivalTime(hr.getArrivalTime());
-            recommendHospital.setDepartureTime(hr.getDepartureTime());
             EmergencyInfo emergencyInfo=emergencyInfoRepository.findById(hr.getInstitution_code()).orElseThrow(()->new IllegalArgumentException());
             recommendHospital.setInstitutionCode(emergencyInfo);
             saveHospitals(recommendHospital);

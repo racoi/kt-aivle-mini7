@@ -18,7 +18,7 @@ public class RecommendHospital {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="institution_code")
     private  EmergencyInfo institutionCode;
 

@@ -4,6 +4,8 @@ import com.aivle.mini7.client.api.FastApiClient;
 import com.aivle.mini7.client.dto.HospitalResponse;
 import com.aivle.mini7.client.dto.StatusResponse;
 //import com.aivle.mini7.model.EmergencyInfo;
+import com.aivle.mini7.dto.InputDto;
+import com.aivle.mini7.mapper.InputMapper;
 import com.aivle.mini7.model.EmergencyInfo;
 import com.aivle.mini7.model.Input;
 //import com.aivle.mini7.repository.EmergencyInfoRepository;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -30,6 +33,7 @@ import java.util.List;
 @Slf4j
 public class IndexController {
     private final EmergencyService emergencyService;
+    private final InputMapper inputMapper;
 
     @GetMapping("/")
     public String index() {
@@ -37,7 +41,8 @@ public class IndexController {
     }
 
     @GetMapping("/recommend_hospital")
-    public ModelAndView recommend_hospital(@ModelAttribute Input input) {
+    public ModelAndView recommend_hospital(InputDto.Get get) {
+        Input input=inputMapper.inputDtoToInput(get);
         StatusResponse statusResponse = emergencyService.createInput(input);
         //log.info("hospital: {}", hospitalList);
         ModelAndView mv = new ModelAndView();
