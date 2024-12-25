@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advice Data</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="mb-4">Advice Data</h1>
+
+    <!-- Table to display Advice data -->
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Advice</th>
+            <th>EmClass</th>
+            <th>Input ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through Advice data -->
+        <tr th:each="advice : ${adviceList}">
+            <td th:text="${advice.advice_id}"></td>
+            <td th:text="${advice.advice}"></td>
+            <td th:text="${advice.emClass}"></td>
+            <td th:text="${advice.input.inputId}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

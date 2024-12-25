@@ -1,66 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* 전체 레이아웃 설정 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 헤더와 푸터 고정 높이 */
+        header, footer {
+            height: 60px;
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 16px;
+        }
+
+        /* 콘텐츠 영역이 화면에 꽉 차도록 설정 */
+        .content-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 <!-- Include the header -->
-<div th:replace="~{layouts/admin_header.html}"></div>
+<header th:replace="~{layouts/admin_header.html}">Header Content</header>
+<div class="content-container">
+    <div class="container mt-4">
+        <h1 class="mb-4">Admin Dashboard</h1>
 
-<h1>Hospital Logs</h1>
+        <!-- Navigation Links -->
+        <nav class="nav nav-pills nav-justified mb-4">
+            <a class="nav-link" href="/admin/input">Input Data</a>
+            <a class="nav-link" href="/admin/advice">Advice Data</a>
+            <a class="nav-link" href="/admin/recommend-hospital">Recommended Hospitals</a>
+        </nav>
 
-<table class="table table-striped table-hover">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Input Text</th>
-        <th>Date Time</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
-        <th>Emergency Class</th>
-        <th>Hospital 1</th>
-        <th>Address 1</th>
-        <th>Tel 1</th>
-        <th>Hospital 2</th>
-        <th>Address 2</th>
-        <th>Tel 2</th>
-        <th>Hospital 3</th>
-        <th>Address 3</th>
-        <th>Tel 3</th>
-    </tr>
-    </thead>
-    <tbody class="table-group-divider">
-    <!-- 데이터 반복 -->
-    <tr th:each="log, iterStat : ${logList.content}">
-        <td th:text="${iterStat.index + 1}"></td>
-        <td th:text="${log.inputText}"></td>
-        <td th:text="${log.datetime}"></td>
-        <td th:text="${log.inputLatitude}"></td>
-        <td th:text="${log.inputLongitude}"></td>
-        <td th:text="${log.emClass}"></td>
-        <td th:text="${log.hospital1}"></td>
-        <td th:text="${log.addr1}"></td>
-        <td th:text="${log.tel1}"></td>
-        <td th:text="${log.hospital2}"></td>
-        <td th:text="${log.addr2}"></td>
-        <td th:text="${log.tel2}"></td>
-        <td th:text="${log.hospital3}"></td>
-        <td th:text="${log.addr3}"></td>
-        <td th:text="${log.tel3}"></td>
-    </tr>
-    </tbody>
-</table>
-
-<!-- 페이지네이션 -->
-<div>
-    <button th:if="${logList.hasPrevious()}"
-            th:href="@{/admin(page=${logList.number - 1})}">Previous</button>
-    <span th:text="${logList.number + 1} + '/' + ${logList.totalPages}"></span>
-    <button th:if="${logList.hasNext()}"
-            th:href="@{/admin(page=${logList.number + 1})}">Next</button>
+        <!-- Content Placeholder -->
+        <div class="content">
+            <h2>Welcome to the Admin Dashboard</h2>
+            <p>Select a category above to view and manage data.</p>
+        </div>
+    </div>
 </div>
 <!-- Footer -->
-<div th:replace="~{layouts/footer.html}"></div>
+<footer th:replace="~{layouts/footer.html}">Footer Content</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
