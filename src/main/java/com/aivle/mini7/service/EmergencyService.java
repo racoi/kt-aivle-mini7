@@ -50,7 +50,7 @@ public class EmergencyService {
     public List<HospitalResponse> createHospitals(StatusResponse statusResponse,Input input){
         List<HospitalResponse> hospitalList = statusResponse.getData();
         for (HospitalResponse hr:hospitalList){
-            RecommendHospital recommendHospital = recommendHospitalMapper.hospitalResponseToRecommenHospital(hr);
+            RecommendHospital recommendHospital = recommendHospitalMapper.hospitalResponseToRecommendHospital(hr);
             recommendHospital.setInputId(input);
             EmergencyInfo emergencyInfo=emergencyInfoRepository.findById(hr.getInstitution_code()).orElseThrow(()->new IllegalArgumentException());
             recommendHospital.setInstitutionCode(emergencyInfo);

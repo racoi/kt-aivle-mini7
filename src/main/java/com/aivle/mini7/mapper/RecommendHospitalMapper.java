@@ -11,5 +11,5 @@ public interface RecommendHospitalMapper {
     @Mapping(target="id",ignore=true)
     @Mapping(target="institutionCode",ignore=true)
     @Mapping(target="inputId",ignore=true)
-    RecommendHospital hospitalResponseToRecommenHospital(HospitalResponse response);
+    RecommendHospital hospitalResponseToRecommendHospital(HospitalResponse response);
 }
