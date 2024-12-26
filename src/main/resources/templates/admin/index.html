@@ -6,56 +6,120 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
-        /* 전체 레이아웃 설정 */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+        body {
+        padding-top: 56px;
         }
-
-        /* 헤더와 푸터 고정 높이 */
-        header, footer {
-            height: 60px;
-            background-color: #f8f9fa;
-            padding: 10px;
-            text-align: center;
-            line-height: 40px;
-            font-size: 16px;
-        }
-
-        /* 콘텐츠 영역이 화면에 꽉 차도록 설정 */
+        /* 콘텐츠 영역 */
         .content-container {
-            flex: 1;
-            overflow-y: auto;
+            margin-left: 260px; /* 사이드바 폭 만큼 여백 추가 */
             padding: 20px;
         }
+
+
     </style>
 </head>
 <body>
 <!-- Include the header -->
 <header th:replace="~{layouts/admin_header.html}">Header Content</header>
+
+<!-- Include the sidebar -->
+<div th:replace="~{layouts/sidebar.html}"></div>
+
 <div class="content-container">
     <div class="container mt-4">
         <h1 class="mb-4">Admin Dashboard</h1>
-
-        <!-- Navigation Links -->
-        <nav class="nav nav-pills nav-justified mb-4">
-            <a class="nav-link" href="/admin/input">Input Data</a>
-            <a class="nav-link" href="/admin/advice">Advice Data</a>
-            <a class="nav-link" href="/admin/recommend-hospital">Recommended Hospitals</a>
-        </nav>
-
-        <!-- Content Placeholder -->
         <div class="content">
             <h2>Welcome to the Admin Dashboard</h2>
-            <p>Select a category above to view and manage data.</p>
+            <p>Select a category from the menu on the left to view and manage data.</p>
         </div>
     </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- 전체 요청 수 -->
+            <div class="col-md-3">
+                <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                    <div class="card-header">전체 요청 수</div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <span th:text="${totalRequests}" style="font-size: 2rem;">0</span>
+                            <small class="text-light" style="font-size: 0.8rem;"> 건</small>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 평균 이동 거리 -->
+            <div class="col-md-3">
+                <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+                    <div class="card-header">평균 이동 거리</div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <span th:text="${averageDistance}" style="font-size: 2rem;">0</span>
+                            <small class="text-light" style="font-size: 0.8rem;"> km</small>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 평균 소요 시간 -->
+            <div class="col-md-3">
+                <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                    <div class="card-header">평균 소요 시간</div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <span th:text="${averageTime}" style="font-size: 2rem;">0</span>
+                            <small class="text-light" style="font-size: 0.8rem;"></small>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 응급 상황 비율 -->
+            <div class="col-md-3">
+                <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                    <div class="card-header">응급 상황 비율</div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <span th:text="${emergencyRatio}" style="font-size: 2rem;">0</span>
+                            <small class="text-light" style="font-size: 0.8rem;"> %</small>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Recommended Hospitals -->
+        <h2>Recent Recommended Hospitals</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Institution Code</th>
+                <th>Distance</th>
+                <th>Duration</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="hospital, iterStat : ${recommendHospitalList}">
+                <td th:text="${iterStat.index}"></td> <!-- 순서 -->
+                <td th:text="${hospital.institutionCode.institutionCode}"></td>
+                <td th:text="${hospital.distance}"></td>
+                <td th:text="${hospital.duration}"></td>
+                <td th:text="${hospital.departureTime}"></td>
+                <td th:text="${hospital.arrivalTime}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div>
-<!-- Footer -->
+
+
+<!-- Include the footer -->
 <footer th:replace="~{layouts/footer.html}">Footer Content</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -37,7 +37,7 @@
                         </p>
                     </div>
                     <div class="card-footer">
-                        <p class="mb-1"><strong>거리:</strong> <span th:text="${hospital.distance}"></span></p>
+                        <p class="mb-1"><strong>거리:</strong> <span th:text="${hospital.distance+ 'km'}" ></span></p>
                         <p class="mb-1"><strong>소요 시간:</strong> <span th:text="${hospital.duration}"></span></p>
                         <p class="mb-0"><strong>출발 시간:</strong> <span th:text="${hospital.departureTime}"></span></p>
                         <p class="mb-0"><strong>도착 시간:</strong> <span th:text="${hospital.arrivalTime}"></span></p>

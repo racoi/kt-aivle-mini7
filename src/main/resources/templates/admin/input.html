@@ -1,38 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Data</title>
+    <title>Advice Data</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+       padding-top: 56px;
+       }
+       /* 콘텐츠 영역 */
+       .content-container {
+           margin-left: 260px; /* 사이드바 폭 만큼 여백 추가 */
+           padding: 20px;
+       }
+    </style>
 </head>
 <body>
-<div class="container mt-4">
-    <h1 class="mb-4">Input Data</h1>
+<!-- Include the header -->
+<header th:replace="~{layouts/admin_header.html}">Header Content</header>
 
-    <!-- Table to display Input data -->
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Date/Time</th>
-            <th>Detail</th>
-            <th>Location</th>
-            <th>EmCount</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Loop through Input data -->
-        <tr th:each="input : ${inputList}">
-            <td th:text="${input.inputId}"></td>
-            <td th:text="${input.datetime}"></td>
-            <td th:text="${input.detail}"></td>
-            <td th:text="${input.latitude + ', ' + input.longitude}"></td>
-            <td th:text="${input.emCount}"></td>
-        </tr>
-        </tbody>
-    </table>
+<!-- Include the sidebar -->
+<div th:replace="~{layouts/sidebar.html}"></div>
+
+<!-- Main Content -->
+<div class="content-container">
+    <div class="container mt-4">
+        <h1 class="mb-4">Input Data</h1>
+        <!-- Table to display Input data -->
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date/Time</th>
+                <th>Detail</th>
+                <th>Location</th>
+                <th>EmCount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Loop through Input data -->
+            <tr th:each="input : ${inputList}">
+                <td th:text="${input.inputId}"></td>
+                <td th:text="${input.datetime}"></td>
+                <td th:text="${input.detail}"></td>
+                <td th:text="${input.latitude + ', ' + input.longitude}"></td>
+                <td th:text="${input.emCount}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<!-- Include the footer -->
+<footer th:replace="~{layouts/footer.html}">Footer Content</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

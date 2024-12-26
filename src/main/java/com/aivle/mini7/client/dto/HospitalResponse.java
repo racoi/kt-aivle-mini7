@@ -19,7 +19,7 @@ public class HospitalResponse {
     private String mri_availability;
     private String ventilator_availability;
     private String ambulance_availability;
-    private String distance;
+    private double distance;
     private String duration;
     private String departureTime;
     private String arrivalTime;

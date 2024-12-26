@@ -27,7 +27,7 @@ public class RecommendHospital {
     private Input inputId;
 
     @Column(name = "distance", nullable = false)
-    private String distance;
+    private double distance;
 
     @Column(name = "duration", nullable = false)
     private String duration;

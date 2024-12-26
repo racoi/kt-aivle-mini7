@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -93,6 +94,60 @@ public class EmergencyService {
 
     public Page<RecommendHospital> findAllHospital(Pageable pageable){
         return recommendHosptialRepository.findAll(pageable);
+    }
+
+    public Page<RecommendHospital> getRecommendHospitalList(Pageable pageable) {
+        return recommendHosptialRepository.findAll(pageable);
+    }
+
+    public long getTotalCalls() {
+        if (inputRepository.count()==0)
+            return 0;
+        return inputRepository.count();
+    }
+
+    private long durationToSeconds(String duration) {
+        String[] parts = duration.split(":");
+        int hours = Integer.parseInt(parts[0]);
+        int minutes = Integer.parseInt(parts[1]);
+        int seconds = Integer.parseInt(parts[2]);
+        return hours * 3600 + minutes * 60 + seconds;
+    }
+
+    private String secondsToDuration(long totalSeconds) {
+        long minutes = totalSeconds / 60;
+        long seconds = totalSeconds % 60;
+        return String.format("%02d:%02d", minutes, seconds);
+    }
+    public String getAverageDuration() {
+        // 예: 평균 소요 시간 계산
+        List<String> durations = recommendHosptialRepository.findAll().stream()
+                .map(RecommendHospital::getDuration)
+                .collect(Collectors.toList());
+
+        long totalSeconds = durations.stream()
+                .mapToLong(this::durationToSeconds)
+                .sum();
+        long averageSeconds = durations.isEmpty() ? 0 : totalSeconds / durations.size();
+        return secondsToDuration(averageSeconds);
+    }
+    public double getAverageDistance() {
+        return recommendHosptialRepository.findAll().stream()
+                .mapToDouble(RecommendHospital::getDistance)
+                .average()
+                .orElse(0.0);
+    }
+
+    public long getUrgentCalls() {
+        if(inputRepository.count() - adviceRepository.count()==0)
+            return 0;
+        return inputRepository.count() - adviceRepository.count();
+    }
+
+    public long getNonRelevantCalls() {
+        if(adviceRepository.count()==0)
+            return 0;
+        return adviceRepository.count();
     }
 
 }
