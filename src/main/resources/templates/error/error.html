@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/error.css" type="text/css">
+</head>
+<body>
+<!-- Include the header -->
+<div th:replace="~{layouts/header.html}"></div>
+
+<div class="card">
+    <div class="alert_header">
+        <div class="image"><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+            <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" stroke-linejoin="round" stroke-linecap="round"></path>
+        </svg></div>
+        <div class="content">
+            <span class="title">Error</span>
+            <p class="message"> 다시 시도해주세요</p>
+        </div>
+        <div class="actions">
+            <button class="desactivate" type="button" onclick="location.href = '/'">돌아가기</button>
+        </div>
+    </div>
+</div>
+<!-- Footer -->
+<div th:replace="~{layouts/footer.html}"></div>
+</body>
+</html>
